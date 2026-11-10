@@ -1895,8 +1895,8 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
         }
 
         File file = new File(
-                getDataFolder(),
-                name + ".yml"
+            dialoguesDir,
+            name + ".yml"
         );
 
         if (file.exists()) {
@@ -1970,8 +1970,8 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
         }
 
         File destination = new File(
-                getDataFolder(),
-                newName + ".yml"
+            dialoguesDir,
+            newName + ".yml"
         );
 
         if (destination.exists()) {
@@ -1982,10 +1982,9 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
         }
 
         File original = new File(
-                getDataFolder(),
-                oldName + ".yml"
+            dialoguesDir,
+            oldName + ".yml"
         );
-
         try {
 
             Files.copy(
@@ -2914,8 +2913,8 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
     ) {
 
         File file = new File(
-                getDataFolder(),
-                dialogue.name() + ".yml"
+            dialoguesDir,
+            dialogue.name() + ".yml"
         );
 
         YamlConfiguration yaml =
@@ -3190,12 +3189,12 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
 
                                     ConfigurationSection section =
                                             yaml.getConfigurationSection(
-                                                    "nodes"
+                                                    "dialogue"
                                             );
 
                                     if (section == null) {
                                         section = yaml.createSection(
-                                                "nodes"
+                                                "dialodue"
                                         );
                                     }
 
@@ -4019,11 +4018,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
 
             case 14 -> {
 
-                boolean current = dialogue.yaml().getBoolean(
-                        "settings.smooth-camera",
-                        true
-                );
-
+                boolean current = dialogue.cfg().smooth();
                 edit(
                         dialogue,
                         yaml -> yaml.set(
@@ -4182,11 +4177,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
 
             case 22 -> {
 
-                boolean current = dialogue.yaml().getBoolean(
-                        "settings.see-through-blocks",
-                        false
-                );
-
+                boolean current = dialogue.cfg().seeThrough();
                 edit(
                         dialogue,
                         yaml -> yaml.set(
@@ -4200,11 +4191,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
 
             case 23 -> {
 
-                boolean current = dialogue.yaml().getBoolean(
-                        "settings.one-time",
-                        false
-                );
-
+                boolean current = dialogue.cfg().oneTime();
                 edit(
                         dialogue,
                         yaml -> yaml.set(
