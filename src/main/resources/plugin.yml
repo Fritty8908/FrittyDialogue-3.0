@@ -1,6 +1,6 @@
 
 name: FrittyDialogue
-version: 1.0.0
+version: 3.1.0
 main: fritty.dialogue.FrittyDialogue
 api-version: '1.21'
 authors: [ Fritty8908 ]
