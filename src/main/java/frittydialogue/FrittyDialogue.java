@@ -178,15 +178,26 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
         String dialogue;
         String node;
 
+        String targetType;
+
         int answer;
+        int answerIndex;
         int page;
 
         Inventory inventory;
 
-        Gui(Screen screen, String dialogue, String node) {
-            this.screen = screen;
+        Gui(
+                String dialogue,
+                Screen screen,
+                String node,
+                int page
+        ) {
             this.dialogue = dialogue;
+            this.screen = screen;
             this.node = node;
+            this.page = page;
+            this.answer = page;
+            this.answerIndex = 0;
         }
 
         @Override
@@ -196,7 +207,8 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
     }
 
     record Prompt(
-            Consumer<String> handler,
+            Player player,
+            Consumer<String> action,
             Runnable back
     ) {}
 
@@ -2076,49 +2088,6 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
 
         return Collections.emptyList();
             }
-    private static final class Gui implements InventoryHolder {
-
-        private final String dialogue;
-        private final Screen screen;
-        private final String node;
-        private final int page;
-
-        private Inventory inventory;
-
-        private Gui(
-                String dialogue,
-                Screen screen,
-                String node,
-                int page
-        ) {
-            this.dialogue = dialogue;
-            this.screen = screen;
-            this.node = node;
-            this.page = page;
-        }
-
-        @Override
-        public Inventory getInventory() {
-            return inventory;
-        }
-    }
-
-    private record Prompt(
-            Player player,
-            Consumer<String> action,
-            Runnable back
-    ) {}
-
-    private record Setting(
-            String key,
-            String title,
-            String description,
-            char type
-    ) {}
-
-    private final Map<UUID, Prompt> prompts = new HashMap<>();
-
-    private static final int PAGE_SIZE = 45;
 
     private void openNodes(Player player, String dialogueName) {
 
@@ -2500,6 +2469,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
             String dialogueName,
             String nodeId,
             String targetType,
+            int answerIndex,
             int page
     ) {
 
@@ -2526,6 +2496,9 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                 nodeId,
                 page
         );
+
+        gui.targetType = targetType;
+        gui.answerIndex = answerIndex;
 
         Inventory inventory = Bukkit.createInventory(
                 gui,
@@ -3456,6 +3429,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                     gui.dialogue,
                     gui.node,
                     "node",
+                    0,
                     0
             );
 
@@ -3634,9 +3608,10 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                     gui.dialogue,
                     gui.node,
                     "answer",
-                    answerIndex
+                    answerIndex,
+                    0
             );
-
+                
             case 45 -> openNode(
                     player,
                     gui.dialogue,
