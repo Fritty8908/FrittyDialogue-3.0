@@ -3194,7 +3194,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
 
                                     if (section == null) {
                                         section = yaml.createSection(
-                                                "dialodue"
+                                                "dialogue"
                                         );
                                     }
 
@@ -3259,7 +3259,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                     input -> edit(
                             dialogue,
                             yaml -> yaml.set(
-                                    "nodes." + gui.node + ".text",
+                                    "dialogue." + gui.node + ".text",
                                     input
                             )
                     ),
@@ -3294,7 +3294,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                         edit(
                                 dialogue,
                                 yaml -> yaml.set(
-                                        "nodes." + gui.node + ".delay",
+                                        "dialogue." + gui.node + ".delay",
                                         delay
                                 )
                         );
@@ -3332,7 +3332,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                         edit(
                                 dialogue,
                                 yaml -> yaml.set(
-                                        "nodes." + gui.node + ".scale",
+                                        "dialogue." + gui.node + ".scale",
                                         scale
                                 )
                         );
@@ -3354,7 +3354,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                         edit(
                                 dialogue,
                                 yaml -> yaml.set(
-                                        "nodes." + gui.node + ".offset",
+                                        "dialogue." + gui.node + ".offset",
                                         vector
                                 )
                         );
@@ -3383,7 +3383,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                         edit(
                                 dialogue,
                                 yaml -> yaml.set(
-                                        "nodes." + gui.node + ".location",
+                                        "dialogue." + gui.node + ".location",
                                         value.equalsIgnoreCase("none")
                                                 ? null
                                                 : value
@@ -3407,7 +3407,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                 edit(
                         dialogue,
                         yaml -> yaml.set(
-                                "nodes." + gui.node + ".camera-location",
+                                "dialogue." + gui.node + ".camera-location",
                                 location
                         )
                 );
@@ -3451,7 +3451,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                         edit(
                                 dialogue,
                                 yaml -> yaml.set(
-                                        "nodes." + gui.node,
+                                        "dialogue." + gui.node,
                                         null
                                 )
                         );
@@ -3496,6 +3496,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
             }
         }
     }
+    
     private void clickAnswer(Player player, Gui gui, int slot) {
 
         Dialogue dialogue = dialogues.get(gui.dialogue);
