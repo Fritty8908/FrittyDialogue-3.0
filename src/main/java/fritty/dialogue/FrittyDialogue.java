@@ -3636,23 +3636,48 @@ static final class Session {
                         edit(
                                 dialogue,
                                 yaml -> {
+                                           String answersPath =
+                                            "dialogue." + gui.node + ".answers";
 
-                                    List<Map<?, ?>> answers =
-                                            yaml.getMapList(
-                                                    "dialogue." + gui.node + ".answers"
-                                            );
+                                    ConfigurationSection answers =
+                                            yaml.getConfigurationSection(answersPath);
 
-                                    if (answerIndex < 0
-                                            || answerIndex >= answers.size()) {
+                                    if (answers == null) {
                                         return;
                                     }
 
-                                    answers.remove(answerIndex);
+                                    List<Map<String, Object>> values =
+                                            new ArrayList<>();
 
-                                    yaml.set(
-                                            "dialogue." + gui.node + ".answers",
-                                            answers
-                                    );
+                                    for (String key : answers.getKeys(false)) {
+
+                                        ConfigurationSection answer =
+                                                answers.getConfigurationSection(key);
+
+                                        if (answer != null) {
+                                            values.add(answer.getValues(false));
+                                        }
+                                    }
+
+                                    if (answerIndex < 0
+                                            || answerIndex >= values.size()) {
+                                        return;
+                                    }
+
+                                    values.remove(answerIndex);
+
+                                    yaml.set(answersPath, null);
+
+                                    ConfigurationSection rebuilt =
+                                            yaml.createSection(answersPath);
+
+                                    for (int i = 0; i < values.size(); i++) {
+
+                                        ConfigurationSection answer =
+                                                rebuilt.createSection(String.valueOf(i));
+
+                                        answer.getValues(false).putAll(values.get(i));
+                                    }
                                 }
                         );
 
@@ -3710,23 +3735,22 @@ static final class Session {
                 dialogue,
                 yaml -> {
 
-                    List<Map<?, ?>> answers =
-                            yaml.getMapList(
-                                    "dialogue." + nodeId + ".answers"
-                            );
+                    String answersPath =
+                            "dialogue." + nodeId + ".answers";
 
-                    Map<String, Object> answer = new LinkedHashMap<>();
+                    ConfigurationSection answers =
+                            yaml.getConfigurationSection(answersPath);
 
-                    answer.put("text", "Нова відповідь");
-                    answer.put("next", null);
-                    answer.put("commands", new ArrayList<String>());
+                    if (answers == null) {
+                        answers = yaml.createSection(answersPath);
+                    }
 
-                    answers.add(answer);
+                    ConfigurationSection answer =
+                            answers.createSection(String.valueOf(newIndex));
 
-                    yaml.set(
-                            "dialogue." + nodeId + ".answers",
-                            answers
-                    );
+                    answer.set("text", "Нова відповідь");
+                    answer.set("next", null);
+                    answer.set("commands", new ArrayList<String>());
                 }
         );
 
