@@ -3101,6 +3101,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
             case SETTINGS -> clickSettings(player, gui, slot);
         }
     }
+}
 
     private void clickNodes(Player player, Gui gui, int slot) {
 
@@ -3496,7 +3497,8 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
             }
         }
     }
-    
+    ----------------+++
+
     private void clickAnswer(Player player, Gui gui, int slot) {
 
         Dialogue dialogue = dialogues.get(gui.dialogue);
@@ -3516,7 +3518,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
 
         int answerIndex = gui.page;
 
-        String path = "nodes." + gui.node
+        String path = "dialogue." + gui.node
                 + ".answers." + answerIndex;
 
         switch (slot) {
@@ -3611,7 +3613,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                     answerIndex,
                     0
             );
-                
+
             case 45 -> openNode(
                     player,
                     gui.dialogue,
@@ -3635,7 +3637,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
 
                                     List<Map<?, ?>> answers =
                                             yaml.getMapList(
-                                                    "nodes." + gui.node + ".answers"
+                                                    "dialogue." + gui.node + ".answers"
                                             );
 
                                     if (answerIndex < 0
@@ -3646,7 +3648,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                                     answers.remove(answerIndex);
 
                                     yaml.set(
-                                            "nodes." + gui.node + ".answers",
+                                            "dialogue." + gui.node + ".answers",
                                             answers
                                     );
                                 }
@@ -3708,7 +3710,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
 
                     List<Map<?, ?>> answers =
                             yaml.getMapList(
-                                    "nodes." + nodeId + ".answers"
+                                    "dialogue." + nodeId + ".answers"
                             );
 
                     Map<String, Object> answer = new LinkedHashMap<>();
@@ -3720,7 +3722,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                     answers.add(answer);
 
                     yaml.set(
-                            "nodes." + nodeId + ".answers",
+                            "dialogue." + nodeId + ".answers",
                             answers
                     );
                 }
@@ -3733,6 +3735,7 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
                 newIndex
         );
     }
+
     private void clickPick(Player player, Gui gui, int slot) {
 
         Dialogue dialogue = dialogues.get(gui.dialogue);
@@ -3769,11 +3772,11 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
 
                 if (gui.targetType.equals("node")) {
 
-                    path = "nodes." + gui.node + ".next";
+                    path = "dialogue." + gui.node + ".next";
 
                 } else if (gui.targetType.equals("answer")) {
 
-                    path = "nodes." + gui.node
+                    path = "dialogue." + gui.node
                             + ".answers." + gui.answerIndex
                             + ".next";
 
@@ -3856,13 +3859,13 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
 
                 if ("answer".equals(gui.targetType)) {
 
-                    path = "nodes." + gui.node
+                    path = "dialogue." + gui.node
                             + ".answers." + gui.answerIndex
                             + ".next";
 
                 } else {
 
-                    path = "nodes." + gui.node + ".next";
+                    path = "dialogue." + gui.node + ".next";
                 }
 
                 edit(
