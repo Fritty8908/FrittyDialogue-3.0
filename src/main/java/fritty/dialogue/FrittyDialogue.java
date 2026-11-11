@@ -3206,9 +3206,9 @@ static final class Session {
                                             section.createSection(id);
 
                                     node.set("text", "");
-                                    node.set("delay", 0);
-                                    node.set("offset", "0 0 0");
-                                    node.set("answers", new ArrayList<>());
+                                    node.set("char-delay", 2);
+                                    node.set("location-offset", "0 0 0");
+                                    node.createSection("answers");
                                 }
                         );
 
@@ -3298,7 +3298,7 @@ static final class Session {
                         edit(
                                 dialogue,
                                 yaml -> yaml.set(
-                                        "dialogue." + gui.node + ".delay",
+                                        "dialogue." + gui.node + ".char-delay",
                                         delay
                                 )
                         );
@@ -3336,7 +3336,7 @@ static final class Session {
                         edit(
                                 dialogue,
                                 yaml -> yaml.set(
-                                        "dialogue." + gui.node + ".scale",
+                                        "dialogue." + gui.node + ".text-scale",
                                         scale
                                 )
                         );
@@ -3358,7 +3358,7 @@ static final class Session {
                         edit(
                                 dialogue,
                                 yaml -> yaml.set(
-                                        "dialogue." + gui.node + ".offset",
+                                        "dialogue." + gui.node + ".location-offset",
                                         vector
                                 )
                         );
