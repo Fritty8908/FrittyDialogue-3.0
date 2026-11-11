@@ -55,11 +55,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -137,39 +139,41 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
             LinkedHashMap<String, Node> nodes
     ) {}
 
-    static final class Session {
 
-        final Player player;
-        final Dialogue dialogue;
+static final class Session {
 
-        Node node;
+    final Player player;
+    final Dialogue dialogue;
 
-        int selected;
+    Node node;
 
-        State state = State.BUSY;
+    int selected;
 
-        boolean closed;
+    State state = State.BUSY;
 
-        Location start;
-        Location base;
+    boolean closed;
 
-        String camStr;
+    Location start;
+    Location base;
 
-        float scale = 1f;
+    String camera;
 
-        TextDisplay text;
+    float scale = 1f;
 
-        final List<TextDisplay> answers = new ArrayList<>();
+    TextDisplay display;
 
-        BukkitTask typeTask;
-        BukkitTask moveTask;
-        BukkitTask barTask;
+    final List<TextDisplay> answers = new ArrayList<>();
 
-        Session(Player player, Dialogue dialogue) {
-            this.player = player;
-            this.dialogue = dialogue;
-        }
+    BukkitTask typeTask;
+    BukkitTask moveTask;
+    BukkitTask barTask;
+
+    Session(Player player, Dialogue dialogue, Node node) {
+        this.player = player;
+        this.dialogue = dialogue;
+        this.node = node;
     }
+}
 
     static final class Gui implements InventoryHolder {
 
