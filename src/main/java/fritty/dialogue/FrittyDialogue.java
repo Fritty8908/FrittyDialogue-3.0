@@ -3101,7 +3101,6 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
             case SETTINGS -> clickSettings(player, gui, slot);
         }
     }
-}
 
     private void clickNodes(Player player, Gui gui, int slot) {
 
@@ -3497,7 +3496,6 @@ public final class FrittyDialogue extends JavaPlugin implements Listener, TabExe
             }
         }
     }
-    ----------------+++
 
     private void clickAnswer(Player player, Gui gui, int slot) {
 
