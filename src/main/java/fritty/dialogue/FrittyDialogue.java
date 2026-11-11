@@ -3671,12 +3671,19 @@ static final class Session {
                                     ConfigurationSection rebuilt =
                                             yaml.createSection(answersPath);
 
-                                    for (int i = 0; i < values.size(); i++) {
+                                                for (int i = 0; i < values.size(); i++) {
 
                                         ConfigurationSection answer =
                                                 rebuilt.createSection(String.valueOf(i));
 
-                                        answer.getValues(false).putAll(values.get(i));
+                                        for (Map.Entry<String, Object> entry
+                                                : values.get(i).entrySet()) {
+
+                                            answer.set(
+                                                    entry.getKey(),
+                                                    entry.getValue()
+                                            );
+                                        }
                                     }
                                 }
                         );
